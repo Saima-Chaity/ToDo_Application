@@ -1,0 +1,9 @@
+{% if todo_items %}
+  <ul>
+    {% for todo in todo_items %}
+    <li>
+      <a href="/todos/{{todo.id}}/edit/">{{todo.todo_text}} -- {{todo.date_created}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+{% endif %}
