@@ -29,3 +29,9 @@ def update(request, todo_id):
     todo.todo_text = edited_item
     todo.save()
     return redirect("/todos")
+
+
+def delete(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id)
+    Todo.delete(todo)
+    return redirect("/todos")
