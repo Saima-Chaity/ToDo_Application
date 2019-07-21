@@ -1,6 +1,13 @@
+{% extends 'todos/base.html' %}
 
-
-{{todo_text}}
-{{date_created}}
-
-<a href="/todos">Add New Todo</a>
+{% block content %}
+  <form action="{% url 'todos:update' todo_id %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="addTodo">Edit Todo</label>
+      <input type="text" class="form-control" id="addTodo"  name="todo_text" value="{{todo_text}}">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+  <a href="/todos">Add New Todo</a>
+{% endblock %}

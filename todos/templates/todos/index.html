@@ -1,9 +1,26 @@
-{% if todo_items %}
-  <ul>
-    {% for todo in todo_items %}
-    <li>
-      <a href="/todos/{{todo.id}}/edit/">{{todo.todo_text}} -- {{todo.date_created}}</a>
-    </li>
-    {% endfor %}
-  </ul>
-{% endif %}
+{% extends 'todos/base.html' %}
+
+{% block content %}
+  <form action="{% url 'todos:addTodo' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="addTodo">Add New Todo</label>
+      <input type="text" class="form-control" id="addTodo"  name="todo_text" placeholder="Add a new todo">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+
+  <br/>
+
+  {% if todo_items %}
+    <ul>
+      {% for todo in todo_items %}
+      <li>
+        <p>{{todo.todo_text}}</p>
+        <button><a href="{% url 'todos:edit' todo.id %}">Edit</a></button>
+        <button><a href="{% url 'todos:delete' todo.id %}">Delete</a></button>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
