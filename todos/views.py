@@ -12,6 +12,12 @@ def index(request):
     return render(request, 'todos/index.html', context)
 
 
+def addTodo(request):
+    new_item = Todo(todo_text = request.POST['todo_text'], date_created = timezone.now() )
+    new_item.save()
+    return redirect("/todos")
+
+
 def edit(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     context = {
