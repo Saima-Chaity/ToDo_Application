@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
-from django.template import loader
 from .models import Todo
-from django.utils import timezone
+import dateutil.parser as parser
+
 
 def index(request):
     todo_items = Todo.objects.order_by('-date_created')[:10]
@@ -13,7 +12,7 @@ def index(request):
 
 
 def addTodo(request):
-    new_item = Todo(todo_text = request.POST['todo_text'], date_created = timezone.now() )
+    new_item = Todo(todo_text = request.POST['todo_text'], date_created = (parser.parse(request.POST['date_created'])).isoformat())
     new_item.save()
     return redirect("/todos")
 

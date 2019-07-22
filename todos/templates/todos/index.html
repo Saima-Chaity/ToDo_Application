@@ -1,22 +1,32 @@
 {% extends 'todos/base.html' %}
-
+{% load static %}
 {% block content %}
-  <form action="{% url 'todos:addTodo' %}" method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="addTodo">Add New Todo</label>
-      <input type="text" class="form-control" id="addTodo"  name="todo_text" placeholder="Add a new todo">
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
+<link rel="stylesheet" type="text/css" href="{% static 'todos/style.css' %}">
 
-  <br/>
+  <h2 class="applicationHeader">TODO APPLICATION</h2>
+
+  <div class="todoForm">
+    <form action="{% url 'todos:addTodo' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="addTodo">What do you want to add?</label>
+        <input type="text" class="form-control" id="addTodo"  name="todo_text" placeholder="Description">
+      </div>
+      <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+        <input type="text" class="form-control datetimepicker-input"  name ="date_created" placeholder="Due date" data-target="#datetimepicker1"/>
+        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
 
   {% if todo_items %}
     <ul>
       {% for todo in todo_items %}
       <li>
-        <p>{{todo.todo_text}}</p>
+        <p>{{todo.todo_text}} - {{todo.date_created}}</p>
         <button><a href="{% url 'todos:edit' todo.id %}">Edit</a></button>
         <button><a href="{% url 'todos:delete' todo.id %}">Delete</a></button>
       </li>
