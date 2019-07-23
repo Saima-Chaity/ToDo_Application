@@ -1,36 +1,82 @@
 {% extends 'todos/base.html' %}
 {% load static %}
 {% block content %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'todos/style.css' %}">
 
-  <h2 class="applicationHeader">TODO APPLICATION</h2>
+  <h2 class="applicationHeader" style="text-align:center; margin-top: 3em; margin-bottom: 1em">TODO APPLICATION</h2>
+  <hr style="width: 50%">
 
-  <div class="todoForm">
-    <form action="{% url 'todos:addTodo' %}" method="post">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="addTodo">What do you want to add?</label>
-        <input type="text" class="form-control" id="addTodo"  name="todo_text" placeholder="Description">
-      </div>
-      <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-        <input type="text" class="form-control datetimepicker-input"  name ="date_created" placeholder="Due date" data-target="#datetimepicker1"/>
-        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+  <div class="todoItems" style="width: 50%; margin: 1em auto;">
+    {% if todo_items %}
+      <ul>
+        {% for todo in todo_items %}
+        <li style="display: flex; flex-direction: row; justify-content: space-between;">
+          <p style="display: inline-block;">{{todo.todo_text}} - {{todo.date_created}}</p>
+          <div class="editAndDeleteButton">
+            <button class="btn btn-primary"><a style="color:white" href="{% url 'todos:edit' todo.id %}">Edit</a></button>
+            <button class="btn btn-primary"><a style="color:white" href="{% url 'todos:delete' todo.id %}">Delete</a></button>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  <hr style="width: 50%">
+
+  <div class="container">
+    <!-- Button to Open the Modal -->
+    <div style="width: 10%; margin: auto">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+        Add Task
+      </button>
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog" style="max-width: 55%; max">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title" style="color: green">Add New Task</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="todoForm" style="width:90%; margin:auto">
+              <form action="{% url 'todos:addTodo' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="addTodo">What do you want to add?</label>
+                  <input type="text" class="form-control" id="addTodo"  name="todo_text" placeholder="Description">
+                </div>
+                <div class="dateField" style="display: flex; flex-direction: row;">
+                  <div class="input-group date" id="dateCreated" data-target-input="nearest" style="width:50%; margin: 0 2em 0 0;">
+                    <input type="text" class="form-control datetimepicker-input"  name ="date_created" placeholder="Date created" data-target="#dateCreated"/>
+                    <div class="input-group-append" data-target="#dateCreated" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                  </div>
+                  <div class="input-group date" id="dueDate" data-target-input="nearest" style="width:50%">
+                    <input type="text" class="form-control datetimepicker-input"  name ="due_date" placeholder="Due date" data-target="#dueDate"/>
+                    <div class="input-group-append" data-target="#dueDate" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer" style="margin-top: 3em;">
+                  <button type="submit" class="btn btn-primary" style="width:30%; margin: 1em auto">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-  </div>
+    </div>
 
-  {% if todo_items %}
-    <ul>
-      {% for todo in todo_items %}
-      <li>
-        <p>{{todo.todo_text}} - {{todo.date_created}}</p>
-        <button><a href="{% url 'todos:edit' todo.id %}">Edit</a></button>
-        <button><a href="{% url 'todos:delete' todo.id %}">Delete</a></button>
-      </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+  </div>
 {% endblock %}
+
