@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Bootstrap 4 -->
@@ -22,15 +22,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
-    <title>Hello, world!</title>
+    <title>Todo App</title>
   </head>
+  <style>
+
+   .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+  }
+
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    background: #007bff;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 0.2em;
+  }
+
+  .sidebar a:hover, .addTaskButton .btn:hover{
+    background: #004896;
+  }
+
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a, .addTaskButton {
+      float: left;
+     }
+
+    .addTaskButton{
+      width: 25%;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+  </style>
   <body>
+  <div class="sidebar">
+    <a href="#home">Home</a>
+    <div class="addTaskButton">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+        <i class="fa fa-plus"></i> Add Task
+      </button>
+    </div>
+  </div>
     {% block content %}
     {% endblock %}
 
     <script>
       $(function () {
-        $("#datetimepicker1").datetimepicker();
+        $("#dateCreated").datetimepicker();
+        $("#dueDate").datetimepicker();
+
+        $("#button").on("click", function() {
+          alert("Hi");
+        });
       });
     </script>
 
