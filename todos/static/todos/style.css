@@ -41,20 +41,6 @@ hr{
   width: 50%;
 }
 
-.addTaskButton{
-  width: 100%;
-
-}
-
-.addTaskButton button{
-  width: 100%;
-  color: white;
-  padding: 10px;
-  font-size: 1.5em;
-  font-weight: 600;
-  border-radius:0;
-}
-
 .modal-dialog{
   max-width: 55%;
 }

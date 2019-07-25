@@ -29,7 +29,7 @@
    .sidebar {
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 250px;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
@@ -42,16 +42,31 @@
     color: black;
     padding: 10px;
     text-decoration: none;
-    text-align: center;
-    color: white;
-    background: #007bff;
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: 600;
     margin-bottom: 0.2em;
   }
 
+  .sidebar .active{
+    background: #007bff;
+  }
+
   .sidebar a:hover, .addTaskButton .btn:hover{
     background: #004896;
+  }
+
+  .sidebar .fa {
+    margin-right: 1em;
+  }
+
+  .todo_count{
+    float: right;
+    background: grey;
+    border: 2px solid gray;
+    width: 15%;
+    border-radius: 50%;
+    padding-left: .4em;
+
   }
 
   @media screen and (max-width: 700px) {
@@ -77,12 +92,32 @@
   }
   </style>
   <body>
+
   <div class="sidebar">
-    <a href="#home">Home</a>
+    <a class="active" href="#home"><i class="fa fa-home"></i>Home</a>
+    {% for category in category_items %}
+      <a href="#category">
+        {% if category.category_name == "Personal" %}
+          <i class="fa fa-home"></i>
+        {% elif category.category_name == "Office" %}
+          <i class="fa fa-laptop"></i>
+        {% elif category.category_name == "Travel" %}
+          <i class="fa fa-plane"></i>
+        {% else %}
+          <i class="fa fa-list-ul"></i>
+        {% endif %}
+        {{category.category_name}} <span class="todo_count">{{category.todo_count}}</span>
+      </a>
+    {% endfor %}
     <div class="addTaskButton">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+      <a href="#" data-toggle="modal" data-target="#myModal">
         <i class="fa fa-plus"></i> Add Task
-      </button>
+      </a>
+    </div>
+    <div class="addTaskButton">
+      <a href="#" data-toggle="modal" data-target="#category_Modal">
+        <i class="fa fa-plus"></i> Add Category
+      </a>
     </div>
   </div>
     {% block content %}
