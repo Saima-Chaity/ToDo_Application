@@ -9,6 +9,7 @@ def index(request):
     context = {
         'todo_items': todo_items,
         'category_items': category_items,
+        'hide_side_bar' : False
     }
     return render(request, 'todos/index.html', context)
 
@@ -34,11 +35,15 @@ def addCategory(request):
 
 
 def edit(request, todo_id):
+    if request.path == "/todos/" + str(todo_id) + "/edit/":
+        hide_side_bar = True
+
     todo = get_object_or_404(Todo, pk=todo_id)
     context = {
         'todo_id' : todo_id,
         'todo_text' : todo.todo_text,
-        'date_created': todo.date_created
+        'date_created': todo.date_created,
+        'hideSideBar' : hide_side_bar
     }
     return render(request, 'todos/edit.html', context)
 
@@ -55,4 +60,8 @@ def update(request, todo_id):
 def delete(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     Todo.delete(todo)
+
+    category = get_object_or_404(Category, pk= todo.category_id)
+    category.todo_count -= 1
+    category.save()
     return redirect("/todos")

@@ -69,6 +69,54 @@
 
   }
 
+  .dialog_container{
+    width: 50%;
+    height: 25em;
+    background: cadetblue;
+    margin: 100% auto 0 auto;
+    border-radius: 1em;
+    position:relative;
+    box-shadow: 0px 0px 0 180em rgba(0,0,0,0.5);
+    z-index: 20;
+    animation: slide 1s forwards;
+   }
+
+   @keyframes slide {
+    100% { margin: 10% auto; }
+  }
+
+  .todo_edit_form{
+    width: 100%;
+    margin 5em auto;
+  }
+
+  .dialog_title{
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 1em;
+  }
+
+  .todo_edit_form .form-group{
+    margin: auto;
+    width: 70%;
+  }
+
+  .dialog_footer{
+    margin: auto;
+    width: 100%;
+  }
+
+  .dialog_footer .btn{
+    width: 30%;
+    margin: 2em auto;
+    display: block;
+  }
+
+  .dialog_footer .btn a{
+    text-decoration: none;
+    color: white;
+  }
+
   @media screen and (max-width: 700px) {
     .sidebar {
       width: 100%;
@@ -93,33 +141,36 @@
   </style>
   <body>
 
-  <div class="sidebar">
-    <a class="active" href="#home"><i class="fa fa-home"></i>Home</a>
-    {% for category in category_items %}
-      <a href="#category">
-        {% if category.category_name == "Personal" %}
-          <i class="fa fa-home"></i>
-        {% elif category.category_name == "Office" %}
-          <i class="fa fa-laptop"></i>
-        {% elif category.category_name == "Travel" %}
-          <i class="fa fa-plane"></i>
-        {% else %}
-          <i class="fa fa-list-ul"></i>
-        {% endif %}
-        {{category.category_name}} <span class="todo_count">{{category.todo_count}}</span>
-      </a>
-    {% endfor %}
-    <div class="addTaskButton">
-      <a href="#" data-toggle="modal" data-target="#myModal">
-        <i class="fa fa-plus"></i> Add Task
-      </a>
+  {% if hide_side_bar == False %}
+    <div class="sidebar">
+      <a class="active" href="#home"><i class="fa fa-home"></i>Home</a>
+      {% for category in category_items %}
+        <a href="#category">
+          {% if category.category_name == "Personal" %}
+            <i class="fa fa-home"></i>
+          {% elif category.category_name == "Office" %}
+            <i class="fa fa-laptop"></i>
+          {% elif category.category_name == "Travel" %}
+            <i class="fa fa-plane"></i>
+          {% else %}
+            <i class="fa fa-list-ul"></i>
+          {% endif %}
+          {{category.category_name}} <span class="todo_count">{{category.todo_count}}</span>
+        </a>
+      {% endfor %}
+      <div class="addTaskButton">
+        <a href="#" data-toggle="modal" data-target="#myModal">
+          <i class="fa fa-plus"></i> Add Task
+        </a>
+      </div>
+      <div class="addTaskButton">
+        <a href="#" data-toggle="modal" data-target="#category_Modal">
+          <i class="fa fa-plus"></i> Add Category
+        </a>
+      </div>
     </div>
-    <div class="addTaskButton">
-      <a href="#" data-toggle="modal" data-target="#category_Modal">
-        <i class="fa fa-plus"></i> Add Category
-      </a>
-    </div>
-  </div>
+  {% endif %}
+
     {% block content %}
     {% endblock %}
 
@@ -127,10 +178,6 @@
       $(function () {
         $("#dateCreated").datetimepicker();
         $("#dueDate").datetimepicker();
-
-        $("#button").on("click", function() {
-          alert("Hi");
-        });
       });
     </script>
 
