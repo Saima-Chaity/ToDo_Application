@@ -76,8 +76,6 @@
     margin: 100% auto 0 auto;
     border-radius: 1em;
     position:relative;
-    box-shadow: 0px 0px 0 180em rgba(0,0,0,0.5);
-    z-index: 20;
     animation: slide 1s forwards;
    }
 
@@ -145,7 +143,7 @@
     <div class="sidebar">
       <a class="active" href="#home"><i class="fa fa-home"></i>Home</a>
       {% for category in category_items %}
-        <a href="#category">
+        <a href="#category" class="category_list" data-toggle="modal" data-target=#{{category.category_name}}>
           {% if category.category_name == "Personal" %}
             <i class="fa fa-home"></i>
           {% elif category.category_name == "Office" %}
@@ -155,7 +153,8 @@
           {% else %}
             <i class="fa fa-list-ul"></i>
           {% endif %}
-          {{category.category_name}} <span class="todo_count">{{category.todo_count}}</span>
+          <span class="category_name">{{category.category_name}}</span>
+          <span class="todo_count">{{category.todo_count}}</span>
         </a>
       {% endfor %}
       <div class="addTaskButton">
