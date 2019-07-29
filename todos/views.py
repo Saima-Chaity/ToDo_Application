@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Todo, Category
 import dateutil.parser as parser
+from django.utils import timezone
+
 
 def index(request):
     todo_items = Todo.objects.order_by('-date_created')[:10]
@@ -9,8 +11,10 @@ def index(request):
     context = {
         'todo_items': todo_items,
         'category_items': category_items,
-        'hide_side_bar' : False
+        'hide_side_bar' : False,
+        'current_date': str(timezone.now())
     }
+
     return render(request, 'todos/index.html', context)
 
 
@@ -42,7 +46,7 @@ def edit(request, todo_id):
     context = {
         'todo_id' : todo_id,
         'todo_text' : todo.todo_text,
-        'date_created': todo.date_created,
+        'due_date': str(todo.due_date),
         'hideSideBar' : hide_side_bar
     }
     return render(request, 'todos/edit.html', context)
@@ -51,8 +55,10 @@ def edit(request, todo_id):
 def update(request, todo_id):
 
     edited_item = request.POST['todo_text']
+    edited_due_date = (parser.parse(request.POST['due_date'])).isoformat()
     todo = get_object_or_404(Todo, pk=todo_id)
     todo.todo_text = edited_item
+    todo.due_date = edited_due_date
     todo.save()
     return redirect("/todos")
 

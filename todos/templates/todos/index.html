@@ -14,7 +14,7 @@
           <div class="todoText">
             <input type="radio", name="selectedItem", id="selectedItem" style="margin-right:1em;">
             <p style="display: inline-block;">{{todo.todo_text}}</p>
-            <p><i class="fa fa-calendar"></i> {{todo.date_created}}</p>
+            <p><i class="fa fa-calendar"></i> {{todo.due_date}}</p>
           </div>
           <div class="editAndDeleteButton">
             <button class="btn btn-primary"><a href="{% url 'todos:edit' todo.id %}"><i class="fa fa-edit"></i></a></button>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="dateField">
                   <div class="input-group date" id="dateCreated" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input"  name ="date_created" placeholder="Date created" data-target="#dateCreated"/>
+                    <input type="text" class="form-control datetimepicker-input"  name ="date_created" value={{current_date}} placeholder="Date created" data-target="#dateCreated"/>
                     <div class="input-group-append" data-target="#dateCreated" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>

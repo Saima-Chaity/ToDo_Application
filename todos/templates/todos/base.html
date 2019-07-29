@@ -59,6 +59,16 @@
     margin-right: 1em;
   }
 
+<!--  .sidebar .category_list .remove_category{-->
+<!--    display: none;-->
+<!--  }-->
+
+<!--  .sidebar .category_list:hover .remove_category{-->
+<!--    display: inline-block;-->
+<!--    float: left;-->
+<!--    color: red;-->
+<!--  }-->
+
   .todo_count{
     float: right;
     background: grey;
@@ -100,7 +110,7 @@
   }
 
   .dialog_footer{
-    margin: auto;
+    margin: 1em auto;
     width: 100%;
   }
 
@@ -155,6 +165,7 @@
           {% endif %}
           <span class="category_name">{{category.category_name}}</span>
           <span class="todo_count">{{category.todo_count}}</span>
+<!--          <span id ="remove" class="remove_category"><i class="fa fa-close"></i></span>-->
         </a>
       {% endfor %}
       <div class="addTaskButton">
