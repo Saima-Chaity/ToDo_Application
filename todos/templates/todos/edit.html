@@ -1,6 +1,8 @@
 {% extends 'todos/base.html' %}
+{% load static %}
 
 {% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'todos/edit_dialog.css' %}">
   <div class="dialog_container">
     <!-- The Modal -->
     <div class="dialog" id="edit_todo_dialog">

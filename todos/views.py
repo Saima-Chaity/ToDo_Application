@@ -3,7 +3,6 @@ from .models import Todo, Category
 import dateutil.parser as parser
 from django.utils import timezone
 
-
 def index(request):
     todo_items = Todo.objects.order_by('-date_created')[:10]
     category_items = Category.objects.all()
