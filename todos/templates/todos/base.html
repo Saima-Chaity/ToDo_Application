@@ -57,18 +57,48 @@
           <i class="fa fa-plus"></i> Add Category
         </a>
       </div>
+      <p class="demo1"></p>
     </div>
   {% endif %}
 
-    {% block content %}
-    {% endblock %}
+  <script>
+    var x;
+    function timer_interval(todo_id, due_date) {
+      x = setInterval(function() {
+        timer(todo_id, due_date);
+      }, 1000);
+    }
 
-    <script>
-      $(function () {
-        $("#dateCreated").datetimepicker();
-        $("#dueDate").datetimepicker();
-      });
-    </script>
+    function timer(todo_id, due_date){
+
+      var countDownDate = new Date(due_date).getTime();
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      $(".todo_item" + todo_id).html("Time Remaining : " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+
+      if (distance < 0) {
+        clearInterval(x);
+        $(".todo_item" + todo_id).html("<span>EXPIRED</span>");
+      }
+    }
+  </script>
+
+  {% block content %}
+  {% endblock %}
+
+  <script>
+    $(function () {
+      $("#dateCreated").datetimepicker();
+      $("#dueDate").datetimepicker();
+    });
+  </script>
 
 
     <!-- Optional JavaScript -->
