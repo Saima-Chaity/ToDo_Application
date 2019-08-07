@@ -62,9 +62,9 @@
   {% endif %}
 
   <script>
-    var x;
+    var active_timer;
     function timer_interval(todo_id, due_date) {
-      x = setInterval(function() {
+      active_timer = setInterval(function() {
         timer(todo_id, due_date);
       }, 1000);
     }
@@ -82,10 +82,12 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       $(".todo_item" + todo_id).html("Time Remaining : " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+      $(".todo_item" + todo_id).css("color", "green");
 
       if (distance < 0) {
-        clearInterval(x);
-        $(".todo_item" + todo_id).html("<span>EXPIRED</span>");
+        clearInterval(active_timer);
+        $(".todo_item" + todo_id).html("Your todo_items has been expired!");
+        $(".todo_item" + todo_id).css("color", "red");
       }
     }
   </script>

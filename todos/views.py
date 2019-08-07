@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Todo, Category
+from .models import Todo, Category, NotificationTime
 import dateutil.parser as parser
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from datetime import datetime
+from datetime import datetime, time
+import sqlite3
 
 
 def index(request):
-    todo_items = Todo.objects.order_by('-date_created')[:10]
+    todo_items = Todo.objects.order_by('-due_date')[:10]
     category_items = Category.objects.all()
+    notification_time = NotificationTime.objects.all()
 
     current_date_time = datetime.now()
     dt_string = current_date_time.strftime("%m/%d/%Y %I:%M %p")
@@ -17,9 +19,39 @@ def index(request):
     context = {
         'todo_items': todo_items,
         'category_items': category_items,
+        'notification_time' : notification_time,
         'hide_side_bar' : False,
         'current_date': splited_dt_string[0] + str().join(" ") + splited_dt_string[1] + str().join(" ") + splited_dt_string[2]
     }
+
+    connection = sqlite3.connect('db.sqlite3')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM todos_todo where email_notification != '' AND notification_time != 'None' ")
+    rows = cursor.fetchall()
+    todo_notify_time = 0
+
+    for row in rows:
+        due_date_in_ms = datetime.fromisoformat(row[3]).timestamp() * 1000
+        splited_notification_time = str(row[6]).split(" ")
+        receiver_email = row[5]
+        if splited_notification_time[0] != "None":
+            if splited_notification_time[1] == "minutes":
+                todo_notify_time = int((splited_notification_time[0])) * 60 * 1000
+            elif splited_notification_time[1] == "hours":
+                todo_notify_time = int((splited_notification_time[0])) * 60 * 60 * 1000
+            elif splited_notification_time[1] == "day":
+                todo_notify_time = int((splited_notification_time[0])) * 60 * 60 * 24 * 1000
+
+        if due_date_in_ms == todo_notify_time:
+            todo_item_expire = "Your todo_item will expire in " + row[6] + "!"
+            print(todo_item_expire)
+            send_mail(
+                'Todo_Notification',
+                todo_item_expire,
+                'noreply@todo_application.ca',
+                [receiver_email],
+                fail_silently=False,
+            )
 
     return render(request, 'todos/index.html', context)
 
@@ -27,16 +59,21 @@ def index(request):
 def addTodo(request):
     if request.POST['email_notification']:
         receiver_email = request.POST['email_notification']
-        sendEmail(request, receiver_email)
+        sendEmail(request, receiver_email, notification_time = 0)
+
+    notification_time = ""
+    if request.POST['todo_notification_time']:
+        notification_time = request.POST['todo_notification_time']
 
     new_item = Todo(todo_text = request.POST['todo_text'],
                     date_created = (parser.parse(request.POST['date_created'])).isoformat(),
                     due_date = (parser.parse(request.POST['due_date'])).isoformat(),
                     category_id = request.POST['todo_category'],
-                    email_notification = request.POST['email_notification'])
+                    email_notification = request.POST['email_notification'],
+                    notification_time = notification_time)
 
-    print((parser.parse(request.POST['due_date'])).isoformat())
     new_item.save()
+    sendEmail(request, receiver_email, notification_time)
 
     category_id = request.POST['todo_category']
     category = get_object_or_404(Category, pk=category_id)
@@ -89,19 +126,12 @@ def delete(request, todo_id):
     return redirect("/todos")
 
 
-def sendEmail(request, receiver_email):
+def sendEmail(request, receiver_email, notification_time):
 
     email_body = """
     You have added a new todo_item.
     You can edit and delete the todo_item anytime.
-    You will receive an email once it is expired!"""
-
-    todo_item_expire = """
-    Your todo_item has been expired
-    Your todo_item has been expired
-    Your todo_item has been expired"""
-
-    print(todo_item_expire)
+    Your item will expire in """ + str(notification_time) + "!"
 
     send_mail(
         'Todo_Notification',
