@@ -107,13 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+DATE_FORMAT = "mm-dd-yy"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -124,3 +126,11 @@ STATIC_URL = '/static/'
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
