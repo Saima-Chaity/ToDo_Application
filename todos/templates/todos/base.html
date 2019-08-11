@@ -86,8 +86,7 @@
 
       if (distance < 0) {
         clearInterval(active_timer);
-        $(".todo_item" + todo_id).html("Your todo_items has been expired!");
-        $(".todo_item" + todo_id).css("color", "red");
+        $(".todo_item" + todo_id).html("");
       }
     }
   </script>

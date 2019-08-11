@@ -17,7 +17,7 @@
             <p style="display: inline-block;">{{todo.todo_text}}</p>
             <p><i class="fa fa-calendar"></i>{{todo.due_date}}</p>
             <script>
-             timer_interval("{{todo.id}}" , "{{ todo.due_date|date:"M d, Y h:i:s" }}");
+             timer_interval("{{todo.id}}" , "{{ todo.due_date|date:"M d, Y H:i:s" }}");
             </script>
             <p style="text-align: center" class="todo_item{{todo.id}}"></p>
           </div>
