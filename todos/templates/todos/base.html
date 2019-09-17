@@ -30,7 +30,10 @@
 
   {% if hide_side_bar == False %}
     <div class="sidebar">
-      <a class="active" href="#home"><i class="fa fa-home"></i>Home</a>
+      <a class="active" href="#home">
+        <i class="fa fa-user"></i>
+        <span class="home">Home</span>
+      </a>
       {% for category in category_items %}
         <a href="#category" class="category_list" data-toggle="modal" data-target=#{{category.category_name}}>
           {% if category.category_name == "Personal" %}
@@ -44,20 +47,20 @@
           {% endif %}
           <span class="category_name">{{category.category_name}}</span>
           <span class="todo_count">{{category.todo_count}}</span>
-<!--          <span id ="remove" class="remove_category"><i class="fa fa-close"></i></span>-->
         </a>
       {% endfor %}
       <div class="addTaskButton">
         <a href="#" data-toggle="modal" data-target="#myModal">
-          <i class="fa fa-plus"></i> Add Task
+          <i class="fa fa-plus"></i>
+          <span class="addTask">Add Task</span>
         </a>
       </div>
       <div class="addTaskButton">
         <a href="#" data-toggle="modal" data-target="#category_Modal">
-          <i class="fa fa-plus"></i> Add Category
+          <i class="fa fa-plus"></i>
+          <span class="addCategory">Add Category</span>
         </a>
       </div>
-      <p class="demo1"></p>
     </div>
   {% endif %}
 
@@ -89,6 +92,7 @@
         $(".todo_item" + todo_id).html("");
       }
     }
+
   </script>
 
   {% block content %}

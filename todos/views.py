@@ -136,8 +136,6 @@ def is_expired():
     todo_notify_time = 0
     todo_item_id = 0
 
-    print(rows)
-
     for row in rows:
         todo_item_id = row[0]
         due_date_in_ms = int(datetime.fromisoformat(row[3]).timestamp() * 1000)

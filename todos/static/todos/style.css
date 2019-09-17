@@ -77,10 +77,9 @@ hr{
   margin: 1em auto
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
   .addTaskButton{
-    width: 25%;
-    margin-left: 1em;
+    width: 100%;
   }
 
   .addTaskButton .btn{
@@ -92,7 +91,7 @@ hr{
   }
 
   .todoItems{
-    width: 100%;
+    width: 90%;
   }
 
   .modal-dialog{
