@@ -30,14 +30,14 @@ def index(request):
 
 def addTodo(request):
     receiver_email = ""
+    notification_time = "not available"
     if request.POST['email_notification']:
         receiver_email = request.POST['email_notification']
-        sendEmail(request, receiver_email, notification_time = 0)
 
-    notification_time = ""
     if request.POST['todo_notification_time']:
         notification_time = request.POST['todo_notification_time']
-        sendEmail(request, receiver_email, notification_time)
+
+    sendEmail(request, receiver_email, notification_time)
 
     new_item = Todo(todo_text = request.POST['todo_text'],
                     date_created = (parser.parse(request.POST['date_created'])).isoformat(),
@@ -134,7 +134,6 @@ def is_expired():
     cursor.execute(" SELECT * FROM todos_todo where email_notification != '' AND notification_time != 'None' AND sent_reminder == 'False' ")
     rows = cursor.fetchall()
     todo_notify_time = 0
-    todo_item_id = 0
 
     for row in rows:
         todo_item_id = row[0]
