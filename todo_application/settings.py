@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'todo-app-python-django.azurewebsites.net'
     'todos.apps.TodosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
