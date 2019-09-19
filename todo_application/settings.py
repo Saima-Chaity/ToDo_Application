@@ -121,7 +121,7 @@ DATE_FORMAT = "mm-dd-yy"
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'todos/static/'
+STATIC_ROOT = 'todos/'
 
 BOOTSTRAP4 = {
     'include_jquery': True,
