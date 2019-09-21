@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Todo, Category, NotificationTime
-# import dateutil.parser as parser
+import dateutil.parser as parser
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from datetime import datetime, time
@@ -39,15 +39,14 @@ def addTodo(request):
 
     sendEmail(request, receiver_email, notification_time)
 
-    # new_item = Todo(todo_text = request.POST['todo_text'],
-    #                 date_created = (parser.parse(request.POST['date_created'])).isoformat(),
-    #                 due_date = (parser.parse(request.POST['due_date'])).isoformat(),
-    #                 category_id = request.POST['todo_category'],
-    #                 email_notification = request.POST['email_notification'],
-    #                 notification_time = notification_time)
+    new_item = Todo(todo_text = request.POST['todo_text'],
+                    date_created = (parser.parse(request.POST['date_created'])).isoformat(),
+                    due_date = (parser.parse(request.POST['due_date'])).isoformat(),
+                    category_id = request.POST['todo_category'],
+                    email_notification = request.POST['email_notification'],
+                    notification_time = notification_time)
 
     new_item.save()
-
     category_id = request.POST['todo_category']
     category = get_object_or_404(Category, pk=category_id)
     category.todo_count += 1
@@ -80,12 +79,12 @@ def edit(request, todo_id):
 
 def update(request, todo_id):
 
-    # edited_item = request.POST['todo_text']
-    # edited_due_date = (parser.parse(request.POST['due_date'])).isoformat()
-    # todo = get_object_or_404(Todo, pk=todo_id)
-    # todo.todo_text = edited_item
-    # todo.due_date = edited_due_date
-    # todo.save()
+    edited_item = request.POST['todo_text']
+    edited_due_date = (parser.parse(request.POST['due_date'])).isoformat()
+    todo = get_object_or_404(Todo, pk=todo_id)
+    todo.todo_text = edited_item
+    todo.due_date = edited_due_date
+    todo.save()
 
     return redirect("/todos")
 
