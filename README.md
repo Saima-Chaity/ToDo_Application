@@ -1,5 +1,8 @@
 # ToDo_Application
 
+### Blog post : 
+Check out the detailed description [here](https://technicalblog.saimachaity.com/2019/09/todo-application-in-python-django.html)
+
 ### Features :
 
 - Add todo item in specific category
