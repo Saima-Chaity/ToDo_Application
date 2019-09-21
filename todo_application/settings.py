@@ -120,7 +120,8 @@ DATE_FORMAT = "mm-dd-yy"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+STATIC_URL = 'https://todo-app-python-django.scm.azurewebsites.net/wwwroot/todos/static/'
 STATIC_ROOT = 'D:/home/site/wwwroot/static'
 
 BOOTSTRAP4 = {
