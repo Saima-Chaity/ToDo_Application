@@ -123,7 +123,7 @@ DATE_FORMAT = "mm-dd-yy"
 
 # STATIC_URL = '/static/'
 STATIC_URL = '/wwwroot/todos/static/'
-STATIC_ROOT = 'D:/home/site/wwwroot/static'
+STATIC_ROOT = ''
 
 BOOTSTRAP4 = {
     'include_jquery': True,
