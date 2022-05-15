@@ -1,7 +1,7 @@
 # ToDo_Application
 
 ### Blog post : 
-Check out the detailed description [here](https://technicalblog.saimachaity.com/2019/09/todo-application-in-python-django.html)
+Check out the detailed description [here](https://medium.com/@saima.s.chaity/build-a-todo-application-using-python-and-django-458d5ca7ffef)
 
 ### Features :
 
